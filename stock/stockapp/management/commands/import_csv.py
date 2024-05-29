@@ -5,15 +5,16 @@ from django.core.management.base import BaseCommand
 from stockapp.models import Stock
 
 
-# 명령어로 사용 -> python manage.py read_csv_yfinance csv 파일 디렉토리 경로
+# Command -> python manage.py import_csv
+
+
 class Command(BaseCommand):
     help = 'CSV 파일을 DB로 이전합니다.'
 
-    def add_arguments(self, parser):
-        parser.add_argument('csv_file', type=str)
+    csv_folder_path = 'C:\\Users\\Administrator\\Desktop\\stock_Project\\stock_data'
 
     def handle(self, *args, **kwargs):
-        csv_path = kwargs['csv_file']
+        csv_path = self.csv_folder_path
         if os.path.isdir(csv_path):
             file_pattern = os.path.join(csv_path, '*.csv')
             csv_files = glob.glob(file_pattern)
