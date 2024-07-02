@@ -1,0 +1,62 @@
+{% block content %}
+<h1>{{ stock_id }} 주식 상세 정보</h1>
+
+<form method="get" action="{% url 'stock:stock_detail' stock_id=stock_id %}">
+    <label for="year">연도 선택:</label>
+    <select id="year" name="year">
+        <option value="2022" {% if selected_year == '2022' %}selected{% endif %}>2022</option>
+        <option value="2023" {% if selected_year == '2023' %}selected{% endif %}>2023</option>
+        <option value="2024" {% if selected_year == '2024' %}selected{% endif %}>2024</option>
+    </select>
+    <button type="submit">선택</button>
+</form>
+
+<h2>최근 데이터</h2>
+<p>Date: {{ latest_data.date }}</p>
+<p>Open: {{ latest_data.Open }}</p>
+<p>High: {{ latest_data.High }}</p>
+<p>Low: {{ latest_data.Low }}</p>
+<p>Close: {{ latest_data.Close }}</p>
+<p>AdjClose: {{ latest_data.AdjClose }}</p>
+<p>Volume: {{ latest_data.Volume }}</p>
+
+<h2>{{ selected_year }}년 각 달의 평균</h2>
+<canvas id="monthlyAverageChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const monthlyAvgData = {{ monthly_avg_data|safe }};
+        const labels = monthlyAvgData.map(data => data.month);
+        const openData = monthlyAvgData.map(data => data.Open);
+        const highData = monthlyAvgData.map(data => data.High);
+        const lowData = monthlyAvgData.map(data => data.Low);
+        const closeData = monthlyAvgData.map(data => data.Close);
+        const adjCloseData = monthlyAvgData.map(data => data.AdjClose);
+        const volumeData = monthlyAvgData.map(data => data.Volume);
+
+        const ctx = document.getElementById('monthlyAverageChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: 'Open', data: openData, borderColor: 'blue', fill: false },
+                    { label: 'High', data: highData, borderColor: 'green', fill: false },
+                    { label: 'Low', data: lowData, borderColor: 'red', fill: false },
+                    { label: 'Close', data: closeData, borderColor: 'orange', fill: false },
+                    { label: 'AdjClose', data: adjCloseData, borderColor: 'purple', fill: false },
+                    { label: 'Volume', data: volumeData, borderColor: 'black', fill: false }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

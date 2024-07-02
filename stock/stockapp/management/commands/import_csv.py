@@ -48,12 +48,12 @@ class Command(BaseCommand):
         try:
             Stock.objects.create(
                 date=data['Date'],
-                stock_id=data['ticker'],
+                stock_id=data['stock_id'],
                 Open=data['Open'],
                 High=data['High'],
                 Low=data['Low'],
                 Close=data['Close'],
-                AdjClose=data['AdjClose'],
+                AdjClose=data['Adj Close'],
                 Volume=data['Volume'],
             )
         except Exception as e:

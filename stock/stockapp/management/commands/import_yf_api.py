@@ -1,4 +1,5 @@
 import yfinance as yf
+import pandas as pd
 from django.core.management.base import BaseCommand
 import os
 
@@ -26,8 +27,13 @@ class Command(BaseCommand):
             try:
                 df = yf.download(symbol, start=start_date, end=end_date)
                 df.reset_index(inplace=True)
-                df['ticker'] = symbol
+                df['stock_id'] = symbol
                 df = df[self.cols]
+
+                numeric_fields = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
+                for field in numeric_fields:
+                    df[field] = pd.to_numeric(df[field], errors='coerce')
+
                 file_path = os.path.join(output_dir, f'{symbol}.csv')
                 df.to_csv(file_path, index=False)
                 self.stdout.write(self.style.SUCCESS(f'Successfully downloaded data for {symbol}'))

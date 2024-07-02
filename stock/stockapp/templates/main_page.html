@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-content: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .logo-button {
+            display: inline-block;
+            margin: 10px;
+        }
+        .logo-button img {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-grid">
+            <a href="{% url 'stock:stock_detail' stock_id='AAPL' %}" class="logo-button" aria-label="Apple 주식 상세 정보">
+                <img src="{% static 'images/apple.png' %}" alt="Apple 로고">
+            </a>
+            <a href="{% url 'stock:stock_detail' stock_id='TSLA' %}" class="logo-button" aria-label="Tesla 주식 상세 정보">
+                <img src="{% static 'images/TSLA.png' %}" alt="Tesla 로고">
+            </a>
+            <a href="{% url 'stock:stock_detail' stock_id='SAMSUNG' %}" class="logo-button" aria-label="Samsung 주식 상세 정보">
+                <img src="{% static 'images/samsung.png' %}" alt="Samsung 로고">
+            </a>
+            <a href="{% url 'stock:stock_detail' stock_id='HYUNDAI' %}" class="logo-button" aria-label="Hyundai 주식 상세 정보">
+                <img src="{% static 'images/hyundai.png' %}" alt="Hyundai 로고">
+            </a>
+            <a href="{% url 'stock:stock_detail' stock_id='KAKAO' %}" class="logo-button" aria-label="Kakao 주식 상세 정보">
+                <img src="{% static 'images/kakao.png' %}" alt="Kakao 로고">
+            </a>
+            <a href="{% url 'stock:stock_detail' stock_id='KIA' %}" class="logo-button" aria-label="KIA 주식 상세 정보">
+                <img src="{% static 'images/KIA.png' %}" alt="KIA 로고">
+            </a>
+            <a href="{% url 'stock:stock_detail' stock_id='LG' %}" class="logo-button" aria-label="LG 주식 상세 정보">
+                <img src="{% static 'images/LG.png' %}" alt="LG 로고">
+            </a>
+            <a href="{% url 'stock:stock_detail' stock_id='NAVER' %}" class="logo-button" aria-label="Naver 주식 상세 정보">
+                <img src="{% static 'images/naver.png' %}" alt="Naver 로고">
+            </a>
+            <a href="{% url 'stock:stock_detail' stock_id='SK' %}" class="logo-button" aria-label="SK 주식 상세 정보">
+                <img src="{% static 'images/SK.png' %}" alt="SK 로고">
+            </a>
+        </div>
+    </div>
+</body>
+</html>
