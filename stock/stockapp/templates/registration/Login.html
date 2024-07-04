@@ -1,61 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+{% extends 'base.html' %}
 
-        .login-container {
-            text-align: center;
-            border: 2px solid black; /* Add black border */
-            padding: 20px; /* Add some padding for spacing */
-        }
+{% block title %}Login{% endblock %}
 
-        .login-button {
-            background-color: #4285f4;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+{% block form_title %}LOGIN{% endblock %}
 
-        .login-button:hover {
-            background-color: #3b79d3;
-        }
-
-        .signin-button {
-            background-color: white;
-            color: #3b79d3;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% if error %}
-                <p>{{ error }}</p>
-            {% endif %}
-            <button type="submit" class="login-button">Login</button>
-        </form>
-        <form action="{% url 'stock:signup' %}">
-            <button type="submit" class="signin-button">Sign Up</button>
-        </form>
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+       <div class="input-group-append">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+       </div>
+       {{ form.username }}
     </div>
-</body>
-</html>
+    <div class="input-group mb-2">
+       <div class="input-group-append">
+          <span class="input-group-text"><i class="fas fa-key"></i></span>
+       </div>
+       {{ form.password }}
+    </div>
+    {% if error %}
+        <p class="text-danger">{{ error }}</p>
+    {% endif %}
+    <div class="d-flex justify-content-center mt-3 login_container">
+       <input class="btn login_btn" type="submit" value="Login">
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_links %}
+<div class="mt-4">
+    <div class="d-flex justify-content-center links">
+       Don't have an account? <a href="{% url 'stock:signup' %}" class="ml-2">Sign Up</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+   var form_fields = document.getElementsByTagName('input')
+   form_fields[1].placeholder='Username..';
+   form_fields[2].placeholder='Password..';
+
+   for (var field in form_fields){
+      form_fields[field].className += ' form-control'
+   }
+</script>
+{% endblock %}

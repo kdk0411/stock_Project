@@ -2,15 +2,14 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.urls import reverse_lazy
+from django.db.models import Avg
 
 from .forms import CreateUserForm
 from .models import Stock
-from django.db.models import Avg
-from django.http import JsonResponse
 import calendar
 import json
+
 def main_page(request):
     return render(request, 'main_page.html')
 
@@ -61,12 +60,13 @@ def registerPage(request):
     form = CreateUserForm()
 
     if request.method == 'POST':
-        form =CreateUserForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
 
     context = {'form': form}
     return render(request, 'registration/Signup.html', context)
+
 
 class CustomLoginView(LoginView):
     form_class = AuthenticationForm
@@ -74,6 +74,7 @@ class CustomLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('stock:main_page')
+
 
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('stock:login')
